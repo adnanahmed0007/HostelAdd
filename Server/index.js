@@ -29,8 +29,7 @@ app.use("/room", router);
 app.get("/", (req, res) => {
     res.send("Backend running successfully 🚀");
 });
-
-/* ---------- DB CONNECTION ---------- */
+ 
 let isConnected = false;
 
 async function connectDB() {
@@ -46,6 +45,5 @@ async function connectDB() {
 }
 
 connectDB();
-
-/* ---------- EXPORT (NO listen) ---------- */
+ 
 export default app;
