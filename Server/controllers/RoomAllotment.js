@@ -35,7 +35,7 @@ const allotRoom = async (req, res) => {
         if (room.capacity === 0) {
             room.allocated = true;
         }
-        room.capacity.save();
+
 
         await room.save();
 
