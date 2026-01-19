@@ -14,7 +14,7 @@ app.use(
     cors({
         origin: [
             "http://localhost:5173",
-            "https://your-frontend.vercel.app"
+            "https://hostel-emuj8ohex-adnans-projects-ddb00153.vercel.app/"
         ],
         credentials: true
     })
