@@ -7,28 +7,41 @@ const AddRoom = () => {
     const [capacity, setCapacity] = useState('')
     const [hasAC, setHasAC] = useState(false)
     const [hasAttachedWashroom, setHasAttachedWashroom] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
+        setLoading(true)
+
         try {
-            const response = await axios.post('http://localhost:9923/room/add/rooms',
-                { roomNo, capacity, hasAC, hasAttachedWashroom },
-                { withCredentials: true }
+            const response = await axios.post(
+                `${import.meta.env.VITE_API_URL}/room/add/rooms`,
+                {
+                    roomNo,
+                    capacity: Number(capacity),
+                    hasAC,
+                    hasAttachedWashroom
+                }
             )
-            alert(response.data.message)
-            console.log(response.data)
+
+            alert(response.data.message || "Room added successfully")
+
             setRoomNo('')
             setCapacity('')
             setHasAC(false)
             setHasAttachedWashroom(false)
+
         } catch (err) {
-            alert(err.response?.data?.message || 'Error adding room')
+            alert(err.response?.data?.message || "Error adding room")
+        } finally {
+            setLoading(false)
         }
     }
 
     return (
         <div>
             <h2>Add Room</h2>
+
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
@@ -37,6 +50,7 @@ const AddRoom = () => {
                     onChange={(e) => setRoomNo(e.target.value)}
                     required
                 />
+
                 <input
                     type="number"
                     placeholder="Capacity"
@@ -44,6 +58,7 @@ const AddRoom = () => {
                     onChange={(e) => setCapacity(e.target.value)}
                     required
                 />
+
                 <label>
                     <input
                         type="checkbox"
@@ -52,6 +67,7 @@ const AddRoom = () => {
                     />
                     Has AC
                 </label>
+
                 <label>
                     <input
                         type="checkbox"
@@ -60,7 +76,10 @@ const AddRoom = () => {
                     />
                     Has Washroom
                 </label>
-                <button type="submit">Add Room</button>
+
+                <button type="submit" disabled={loading}>
+                    {loading ? "Adding..." : "Add Room"}
+                </button>
             </form>
         </div>
     )
