@@ -1,6 +1,4 @@
 
-import express from 'express';
-import mongoose from 'mongoose';
 import Room from '../model/User.js';
 const AddRoom = async (req, res) => {
     try {

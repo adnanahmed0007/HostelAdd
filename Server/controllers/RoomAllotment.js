@@ -30,8 +30,13 @@ const allotRoom = async (req, res) => {
                 message: "No room available"
             });
         }
-        room.capacity = room.capacity - studentCount;
-        room.allocated = true;
+
+        room.capacity -= studentCount;
+        if (room.capacity === 0) {
+            room.allocated = true;
+        }
+        room.capacity.save();
+
         await room.save();
 
         res.status(200).json({
